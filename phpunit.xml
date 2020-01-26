@@ -1,0 +1,17 @@
+<phpunit
+	colors="true"
+	bootstrap="tests/bootstrap.php"
+	backupGlobals="false"
+>
+	<testsuites>
+		<testsuite name="phpunit-isolation-test">
+			<directory prefix="class-test-" suffix=".php">tests</directory>
+		</testsuite>
+	</testsuites>
+
+	<filter>
+		<whitelist>
+			<directory>./inc</directory>
+		</whitelist>
+	</filter>
+</phpunit>
