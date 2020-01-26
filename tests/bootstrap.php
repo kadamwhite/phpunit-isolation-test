@@ -10,6 +10,7 @@ require_once __DIR__ . '/class-endpoint-test.php';
 // Load in API endpoints.
 require_once dirname( __DIR__ ) . '/inc/endpoints/data.php';
 
-// If we require this file, the class-test-data-endpoint tests break.
-// If we don't, the class-test-backend.php tests break.
+// If we require this file, the class-test-data-endpoint tests break
+// because the actual namespace overrides our attempt at mocking. If we do not
+// include it, the class-test-backend.php tests break.
 require_once dirname( __DIR__ ) . '/inc/backend.php';
