@@ -2,17 +2,14 @@
 
 use IsolationTest\TestHelpers;
 use IsolationTest\Endpoints\Data;
-use Mockery;
 use WP_Mock;
-use WP_Mock\Tools as WPMockTools;
-use WP_REST_Request;
 
-class TestDecoratorsEndpoint extends TestHelpers\EndpointTestCase {
-
+class TestDataEndpoint extends TestHelpers\EndpointTestCase {
     public function test_getItems() : void
     {
         $request = $this->createMockRequest();
 
+        // This mock does not work if the actual Backend namespace is loaded.
         WP_Mock::userFunction('IsolationTest\\Backend\\proxyToBackend')
             ->once()
             ->andReturn([

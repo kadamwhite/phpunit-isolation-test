@@ -13,4 +13,6 @@ function proxyToBackend() : array
         $values[] = $key;
         $values[] = $value;
     }
+
+    return $values;
 }

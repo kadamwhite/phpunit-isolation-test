@@ -18,7 +18,7 @@ class TestDecoratorsEndpoint extends WPMockTools\TestCase {
 
     public function test_proxyToBackend() : void
     {
-        WP_Mock::userFunction('OtherPlugin\\getData')
+        WP_Mock::userFunction('OtherPlugin\\getTheData')
             ->once()
             ->andReturn([
                 'keyed' => 'array',
