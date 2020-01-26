@@ -21,34 +21,6 @@ class EndpointTestCase extends WPMockTools\TestCase {
         WP_Mock::tearDown();
     }
 
-    protected $endpointArgs = [];
-
-    /**
-     * Callback to use with WP_Mock::userFunction to persist arguments assigned
-     * to a given route on the class's $endpointArgs for later inspection.
-     *
-     * @param string $namespace Expected namespace.
-     * @param string $path      The expected route path.
-     * @param array  $args      Registered route arguments.
-     * @return void
-     */
-    public function persistEndpointArgs(string $namespace, string $path, array $args) : void
-    {
-        $this->endpointArgs["$namespace$path"] = $args;
-    }
-
-    /**
-     * Get the stored arguments for a particular registered endpoint.
-     *
-     * @param string $namespace Expected namespace.
-     * @param string $path      The expected route path.
-     * @return array The endpoint args array for the specified route.
-     */
-    public function getEndpointArgs(string $namespace, string $path) : array
-    {
-        return $this->endpointArgs["$namespace$path"];
-    }
-
     /**
      * Create a mock WP_REST_Request object with the specified parameters.
      *
@@ -65,32 +37,16 @@ class EndpointTestCase extends WPMockTools\TestCase {
     }
 
     /**
-     * Create a mock WP_REST_Response object expecting the specified headers.
-     *
-     * @param array $headers Array of headers to expect to be set on this response.
-     * @return Mockery\MockInterface
-     */
-    public function createMockResponse(array $headers = []) : Mockery\MockInterface
-    {
-        $request = Mockery::mock('\WP_REST_Response');
-        foreach ($headers as $header => $value) {
-            $request->shouldReceive('header')->with($header, $value);
-        }
-        return $request;
-    }
-
-    /**
      * Expect rest_ensure_response to be called with a particular payload.
      *
-     * @param mixed $response     The object to being sent as the REST response.
-     * @param mixed $mockResponse (optional) A mock WP_REST_Response object to return.
+     * @param mixed $response The object to expect to be sent as the REST response.
      * @return void
      */
-    public function expectRestResponse($response, $mockResponse = null) : void
+    public function expectRestResponse($response) : void
     {
         WP_Mock::userFunction('rest_ensure_response')
             ->once()
             ->with($response)
-            ->andReturn($mockResponse ?? $this->createMockResponse());
+            ->andReturn(Mockery::mock('\WP_REST_Response'));
     }
 }
